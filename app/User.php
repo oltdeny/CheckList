@@ -25,11 +25,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
-    public function checklist() 
+    public function checkLists() 
     {
-        return $this->hasOne('App\Models\CheckList');
+        return $this->hasMany('App\Models\CheckList');
     }
 }

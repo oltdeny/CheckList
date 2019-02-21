@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
 });
+
+Route::resources([
+	'lists' => 'CheckListController',
+	'lists.items' => 'ItemController'
+]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

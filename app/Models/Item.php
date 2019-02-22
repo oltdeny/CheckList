@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,11 +8,11 @@ class Item extends Model
 {
     
     protected $fillable = [
-        'name', 'status'
+        'name', 'status', 'check_list_id'
     ];
 
-    public function lists() 
+    public function checkList() 
     {
-    	return $this->belongsToMany('App\Models\CheckList');
+    	return $this->belongsTo('App\Models\CheckList');
     }
 }

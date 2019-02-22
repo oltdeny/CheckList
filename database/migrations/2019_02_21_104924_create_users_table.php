@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemListTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateItemListTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_list', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('item_id')->unsigned()->nullable();
-            $table->integer('checklist_id')->unsigned()->nullable();
-            $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('checklist_id')->references('id')->on('checklists');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('role')->default('user');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateItemListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_list');
+        Schema::dropIfExists('users');
     }
 }

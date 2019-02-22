@@ -15,8 +15,10 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('name');
-            $table->text('status');
+            $table->string('name');
+            $table->string('status')->default('todo');
+            $table->integer('check_list_id')->unsigned()->nullable();
+            $table->foreign('check_list_id')->references('id')->on('check_lists');
             $table->timestamps();
         });
     }

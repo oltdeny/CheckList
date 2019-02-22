@@ -3,6 +3,7 @@
 @section('content')
 
 <a class="btn btn-primary" href="{{ route('lists.items.create', $list) }}" role="button">Add item</a>
+<a class="btn btn-primary" href="{{ route('lists.index') }}" role="button">Lists</a>
 
 
 <table class="table">

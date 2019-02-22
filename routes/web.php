@@ -17,8 +17,12 @@ Route::get('/', function () {
 
 Route::resources([
 	'lists' => 'CheckListController',
-	'lists.items' => 'ItemController'
+	'lists.items' => 'ItemController',
+    'permissions' => 'PermissionController',
+    'users' => 'UserController'
 ]);
+
+Route::put('users/block', 'UserController@block')->name('users.block');
 
 Auth::routes();
 

@@ -18,7 +18,10 @@
                             @endif
                             You are logged in!
                         </div>
-                        <a class="btn btn-primary" href="{{ route('lists.index') }}" role="button">Check Lists</a>
+                            <a class="btn btn-primary" href="{{ route('lists.index') }}" role="button">Check Lists</a>
+                            @can('lookAll', \App\Models\CheckList::class)
+                                <a class="btn btn-primary" href="{{ route('users.index') }}" role="button">Users</a>
+                            @endcan
                     </div>
                 </div>
             </div>

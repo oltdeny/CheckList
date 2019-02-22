@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\CheckList');
     }
+
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Models\Permission');
+    }
 }

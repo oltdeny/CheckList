@@ -24,11 +24,13 @@
 		      <td>{{ $list->name }}</td>
 		      <td>{{ $list->user->name }}</td>
 		      <td>
-		      	<form action="{{ route('lists.destroy', $list->id) }}" method="POST">
-	 	 		 	@method('DELETE')
-    				@csrf
-  					<button type="submit" class="btn btn-danger">Delete</button>
-				</form>	      	
+				  @can('delete', $list)
+					<form action="{{ route('lists.destroy', $list) }}" method="POST">
+						@method('DELETE')
+						@csrf
+						<button type="submit" class="btn btn-danger">Delete</button>
+					</form>
+				  @endcan
 		      </td>
 	    	</tr>
 		@endforeach 

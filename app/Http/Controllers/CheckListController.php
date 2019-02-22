@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\CheckList;
-use App\Models\Item;
-use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
 
 
 class CheckListController extends Controller
@@ -19,8 +17,8 @@ class CheckListController extends Controller
      */
     public function index()
     {
-
-        return view('lists/lists', ['lists' => CheckList::all()]);
+        $lists = CheckList::where('user_id', Auth::id())->get();
+        return view('lists/lists', ['lists' => $lists]);
     }
 
     /**
@@ -30,13 +28,18 @@ class CheckListController extends Controller
      */
     public function create()
     {
+        $count = CheckList::where('user_id', Auth::id())->count();
+        if ($count >= 5) {
+            return back()
+                ->with('error', 'You can not create more than 5 check-lists');
+        }
         return view('lists/create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,7 +56,7 @@ class CheckListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -67,7 +70,7 @@ class CheckListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

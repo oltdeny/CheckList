@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
     <form action="{{ route('lists.store') }}" method="POST">
     	@csrf
     	<div class="form-group">

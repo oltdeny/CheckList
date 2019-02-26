@@ -57,4 +57,13 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('users.index');
     }
+
+    public function permit(Request $request, $id)
+    {
+        $user = User::with('permissions')->find($id);
+        $this->authorize('permit', User::class);
+        dd($user);
+        return redirect()->route('users.index');
+    }
+
 }

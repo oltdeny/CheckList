@@ -18,11 +18,11 @@ Route::get('/', function () {
 
 Route::post('users/{user}/block', 'UserController@block')->name('users.block');
 Route::post('users/{user}/unblock', 'UserController@unblock')->name('users.unblock');
+Route::post('users/{user}/permit', 'UserController@permit')->name('users.permit');
 
 Route::resources([
 	'lists' => 'CheckListController',
 	'lists.items' => 'ItemController',
-    'permissions' => 'PermissionController',
     'users' => 'UserController'
 ]);
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemsTable extends Migration
+class CreatePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('status')->default('todo');
-            $table->integer('check_list_id')->unsigned()->nullable();
-            $table->foreign('check_list_id')->references('id')->on('check_lists')->onDelete('cascade');;
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('permissions');
     }
 }

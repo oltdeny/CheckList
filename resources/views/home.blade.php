@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     @guest
         <div class="container">
             Log in, or register!
@@ -18,7 +19,10 @@
                             @endif
                             You are logged in!
                         </div>
-                        <a class="btn btn-primary" href="{{ route('lists.index') }}" role="button">Check Lists</a>
+                            <a class="btn btn-primary" href="{{ route('lists.index') }}" role="button">Check Lists</a>
+                            @can('look', \App\User::class)
+                                <a class="btn btn-primary" href="{{ route('users.index') }}" role="button">Users</a>
+                            @endcan
                     </div>
                 </div>
             </div>

@@ -11,15 +11,23 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('home');
 });
 
+Route::post('users/{user}/block', 'UserController@block')->name('users.block');
+Route::post('users/{user}/unblock', 'UserController@unblock')->name('users.unblock');
+
 Route::resources([
 	'lists' => 'CheckListController',
-	'lists.items' => 'ItemController'
+	'lists.items' => 'ItemController',
+    'permissions' => 'PermissionController',
+    'users' => 'UserController'
 ]);
 
 Auth::routes();
+
+Route::post('login', 'AuthController@login');
 
 Route::get('/home', 'HomeController@index')->name('home');

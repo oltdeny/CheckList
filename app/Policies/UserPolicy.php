@@ -9,10 +9,12 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function lookAll(User $user)
+    public function look(User $user)
     {
         foreach ($user->permissions as $permission) {
-            if ($permission->name === 'lookAll') {
+            if ($permission->name === 'look'
+                || $permission->name === 'block'
+                || $permission->name === 'edit') {
                 return true;
             }
         }
@@ -34,41 +36,5 @@ class UserPolicy
                 return true;
             }
         }
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
-     * @return mixed
-     */
-    public function delete(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
-     * @return mixed
-     */
-    public function restore(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
-     * @return mixed
-     */
-    public function forceDelete(User $user, User $model)
-    {
-        //
     }
 }

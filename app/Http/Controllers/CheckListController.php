@@ -25,9 +25,10 @@ class CheckListController extends Controller
     {
         $this->authorize('create', CheckList::class);
         $count = CheckList::where('user_id', Auth::id())->count();
-        if ($count >= 5) {
+        $maxCount = Auth::user()->count;
+        if ($count >= $maxCount) {
             return back()
-                ->with('error', 'You can not create more than 5 check-lists');
+                ->with('error', "You can not create more than $maxCount check-lists");
         }
         return view('lists/create');
     }

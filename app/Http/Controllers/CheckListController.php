@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCheckList;
 use App\Models\CheckList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,11 +34,13 @@ class CheckListController extends Controller
         return view('lists/create');
     }
 
-    public function store(Request $request)
+    public function store(StoreCheckList $request)
     {
+        $validated = $request->validated();
+        $name = $validated['name'];
         $checkList = new CheckList();
         $checkList->fill([
-            'name' => $request->name,
+            'name' => $name,
             'user_id' => Auth::id()
         ]);
         $checkList->save();

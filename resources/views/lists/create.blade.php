@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
+	@if(session('error'))
+		<div class="alert-danger">
+			{{ session('error') }}
+		</div>
+	@endif
     <form action="{{ route('lists.store') }}" method="POST">
     	@csrf
     	<div class="form-group">

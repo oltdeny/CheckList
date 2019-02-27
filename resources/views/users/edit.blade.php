@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <a class="btn btn-outline-info" href="{{ route('users.index') }}" role="button">Users</a>
 
     <div class="card text-center">
         <div class="card-header">

@@ -17,10 +17,10 @@ class CheckListPolicy
         }
     }
 
-    public function lookAll(User $user)
+    public function look(User $user)
     {
         foreach ($user->permissions as $permission) {
-            if ($permission->name === 'lookAll') {
+            if ($permission->name === 'look') {
                 return true;
             }
         }

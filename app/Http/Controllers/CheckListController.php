@@ -13,7 +13,7 @@ class CheckListController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user->can('lookAll', CheckList::class)) {
+        if ($user->can('look', CheckList::class)) {
             $lists = CheckList::all();
         } else {
             $lists = CheckList::where('user_id', Auth::id())->get();

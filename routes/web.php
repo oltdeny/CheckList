@@ -18,7 +18,9 @@ Route::get('/', function () {
 
 Route::post('users/{user}/block', 'UserController@block')->name('users.block');
 Route::post('users/{user}/unblock', 'UserController@unblock')->name('users.unblock');
+Route::get('users/{user}/addPermission', 'UserController@addPermission')->name('users.addPermission');
 Route::post('users/{user}/permit', 'UserController@permit')->name('users.permit');
+Route::post('users/{user}/forbid/{perm}', 'UserController@forbid')->name('users.forbid');
 
 Route::resources([
 	'lists' => 'CheckListController',

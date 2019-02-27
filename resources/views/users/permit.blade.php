@@ -7,15 +7,29 @@
             {{ $user->name }}
         </div>
         <div class="card-body">
-            <h5 class="card-title">Count of possible check-lists: {{ $user->count }}</h5>
-            <form action="{{ route('users.update', $user->id) }}" method="POST">
-                @method('PUT')
+            <h5 class="card-title">Permissions of {{ $user->name }}'s:</h5>
+            <ul class="list-group">
+                @foreach($user->permissions as $perm)
+                    <li class="list-group-item">
+                        {{ $perm->name }}
+                        <form action="{{ route('users.forbid', [$user->id, $perm->id]) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger">Forbid</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+            <form action="{{ route('users.permit', $user->id) }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="count">Change count:</label>
-                    <input type="number" class="form-control" id="count" name="count" placeholder="Enter new count:">
+                    <label for="permission">Add permission</label>
+                    <select name="permission" id="permission" class="custom-select custom-select-sm">
+                        @foreach($permissions as $permission)
+                            <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Change</button>
+                <button type="submit" class="btn btn-primary">Add permission</button>
             </form>
 
         </div>

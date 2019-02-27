@@ -43,6 +43,11 @@
                             <button type="submit" class="btn btn-outline-dark">Edit</button>
                         </form>
                     @endcan
+                    @can('permit', \App\User::class)
+                        <form action="{{ route('users.addPermission', $user->id) }}" method="GET">
+                            <button type="submit" class="btn btn-outline-dark">Edit permissions</button>
+                        </form>
+                    @endcan
                     @can('block', \App\User::class)
                         <form action="{{ route('users.block', $user->id) }}" method="POST">
                             @csrf

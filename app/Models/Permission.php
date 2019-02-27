@@ -15,4 +15,9 @@ class Permission extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public static function equals(Permission $p1, Permission $p2)
+    {
+        return $p1->id === $p2->id;
+    }
 }

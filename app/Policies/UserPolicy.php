@@ -14,7 +14,8 @@ class UserPolicy
         foreach ($user->permissions as $permission) {
             if ($permission->name === 'look'
                 || $permission->name === 'block'
-                || $permission->name === 'edit') {
+                || $permission->name === 'edit'
+                || $permission->name === 'permit') {
                 return true;
             }
         }
@@ -33,6 +34,15 @@ class UserPolicy
     {
         foreach ($user->permissions as $permission) {
             if ($permission->name === 'block') {
+                return true;
+            }
+        }
+    }
+
+    public function permit(User $user)
+    {
+        foreach ($user->permissions as $permission) {
+            if ($permission->name === 'permit') {
                 return true;
             }
         }

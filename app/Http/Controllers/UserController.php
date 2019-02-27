@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUser;
 use App\Models\CheckList;
+use App\Models\Permission;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\BinaryOp\Equal;
 
 class UserController extends Controller
 {
@@ -56,5 +58,36 @@ class UserController extends Controller
         $user->status = 'active';
         $user->save();
         return redirect()->route('users.index');
+    }
+
+    public function addPermission(Request $request, $id)
+    {
+        $user = User::with('permissions')->find($id);
+        return view('users.permit', [
+            'user' => $user,
+            'permissions' => Permission::all()
+        ]);
+    }
+
+    public function permit(Request $request, $id)
+    {
+        $user = User::with('permissions')->find($id);
+        $this->authorize('permit', User::class);
+        $permission = Permission::find($request->permission);
+        foreach ($user->permissions as $perm) {
+            if(Permission::equals($perm, $permission)) {
+                return back();
+            }
+        }
+        $user->permissions()->save($permission);
+        return back();
+    }
+
+    public function forbid(Request $request, $user_id, $perm_id)
+    {
+        $user = User::with('permissions')->find($user_id);
+        $this->authorize('permit', User::class);
+        $user->permissions()->detach($perm_id);
+        return back();
     }
 }

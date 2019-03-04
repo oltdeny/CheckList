@@ -23,8 +23,8 @@ Route::post('users/{user}/permit', 'UserController@permit')->name('users.permit'
 Route::post('users/{user}/forbid/{perm}', 'UserController@forbid')->name('users.forbid');
 
 Route::resources([
-	'lists' => 'CheckListController',
-	'lists.items' => 'ItemController',
+    'lists' => 'CheckListController',
+    'lists.items' => 'ItemController',
     'users' => 'UserController'
 ]);
 

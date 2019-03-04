@@ -13,7 +13,7 @@ class ItemPolicy
 
     public function create(User $user, CheckList $checkList)
     {
-        if($user->id === $checkList->user_id) {
+        if ($user->id === $checkList->user_id) {
             return true;
         }
     }

@@ -12,7 +12,7 @@ class CheckListPolicy
 
     public function view(User $user, CheckList $checkList)
     {
-        if($user->id === $checkList->user_id) {
+        if ($user->id === $checkList->user_id) {
             return true;
         }
     }
@@ -33,7 +33,7 @@ class CheckListPolicy
 
     public function delete(User $user, CheckList $checkList)
     {
-        if($user->id === $checkList->user_id) {
+        if ($user->id === $checkList->user_id) {
             return true;
         }
     }

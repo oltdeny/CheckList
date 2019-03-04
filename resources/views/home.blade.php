@@ -19,10 +19,10 @@
                             @endif
                             You are logged in!
                         </div>
-                            <a class="btn btn-primary" href="{{ route('lists.index') }}" role="button">Check Lists</a>
-                            @can('look', \App\User::class)
-                                <a class="btn btn-primary" href="{{ route('users.index') }}" role="button">Users</a>
-                            @endcan
+                        <a class="btn btn-primary" href="{{ route('lists.index') }}" role="button">Check Lists</a>
+                        @can('look', \App\User::class)
+                            <a class="btn btn-primary" href="{{ route('users.index') }}" role="button">Users</a>
+                        @endcan
                     </div>
                 </div>
             </div>

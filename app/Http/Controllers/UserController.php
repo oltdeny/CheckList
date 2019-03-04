@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         $this->authorize('edit', User::class);
         return view('users/edit', [
-           'user' => User::find($id)
+            'user' => User::find($id)
         ]);
     }
 
@@ -38,7 +38,7 @@ class UserController extends Controller
         $user->count = $count;
         $user->save();
         $oldCount = CheckList::where('user_id', $user->id)->count();
-        CheckList::where('user_id', $user->id)->orderBy('id', 'desc')->limit($oldCount-$count)->delete();
+        CheckList::where('user_id', $user->id)->orderBy('id', 'desc')->limit($oldCount - $count)->delete();
         return redirect()->route('users.index');
     }
 
@@ -75,7 +75,7 @@ class UserController extends Controller
         $this->authorize('permit', User::class);
         $permission = Permission::find($request->permission);
         foreach ($user->permissions as $perm) {
-            if(Permission::equals($perm, $permission)) {
+            if (Permission::equals($perm, $permission)) {
                 return back();
             }
         }

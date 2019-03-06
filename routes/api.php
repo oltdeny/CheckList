@@ -17,9 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resources([
-    'checklists' => 'api\CheckListController',
-    'items' => 'api\ItemController',
-    'users' => 'api\UserController',
-]);
+Route::post('login', 'api\PassportController@login');
+Route::post('register', 'api\PassportController@register');
+
+Route::middleware('auth:api')->group(function () {
+    Route::resources([
+        'checklists' => 'api\CheckListController',
+        'items' => 'api\ItemController',
+        'users' => 'api\UserController',
+    ]);
+});
 

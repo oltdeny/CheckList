@@ -18,7 +18,7 @@ class CheckListController extends Controller
         ], 200);
     }
 
-    public function create()
+    public function store(Request $request)
     {
         $user = auth()->user();
         $count = $user->checkLists->count();
@@ -27,24 +27,19 @@ class CheckListController extends Controller
                 'messages' => "could not create more then $user->count checklists",
             ], 500);
         }
-        return response()->json([
-            'token' => $user->createToken('allowed_to_store')->accessToken
-        ], 200);
-    }
-
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|min:3',
-        ]);
-        $checklist = CheckList::create([
-            'name' => $request->name,
-            'user_id' => auth()->user()->id
-        ]);
-        return response()->json([
-            'success' => true,
-            'checklist' => $checklist
-        ], 200);
+        else {
+            $this->validate($request, [
+                'name' => 'required|min:3',
+            ]);
+            $checklist = CheckList::create([
+                'name' => $request->name,
+                'user_id' => auth()->user()->id
+            ]);
+            return response()->json([
+                'success' => true,
+                'checklist' => $checklist
+            ], 200);
+        }
     }
 
     public function show($id)

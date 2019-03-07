@@ -8,79 +8,85 @@ use App\Http\Controllers\Controller;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:3',
+            'id' => 'required|integer'
+        ]);
+
+        $checklist = auth()->user()->checkLists()->find($request->id);
+        if (!$checklist) {
+            return response()->json([
+                'success' => false,
+                'message' => "You can not add items to someone else's check-list"
+            ], 400);
+        }
+
+        $item = new Item();
+        $item->fill([
+            'name' => $request->name,
+            'check_list_id' => $request->id
+        ]);
+        $item->save();
+
+        return response()->json([
+            'success' => true,
+            'item' => $item
+        ], 400);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Item $item)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'check_list_id' => 'required|integer'
+        ]);
+
+        $checklist = auth()->user()->checkLists()->find($request->check_list_id);
+        if(!$checklist) {
+            return response()->json([
+                'success' => false,
+                'message' => "Checklist with id $request->check_list_id not found in your list"
+            ], 400);
+        }
+        $item = $checklist->items()->find($id);
+        if (!$item) {
+            return response()->json([
+                'success' => false,
+                'message' => "Item with id $id not found"
+            ], 400);
+        }
+        $item->status = 'done';
+        $item->save();
+        return response()->json([
+            'success' => true,
+            'item' => $item
+        ], 400);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Item $item)
+    public function destroy(Request $request, $id)
     {
-        //
-    }
+        $this->validate($request, [
+            'check_list_id' => 'required|integer'
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Item $item)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Item $item)
-    {
-        //
+        $checklist = auth()->user()->checkLists()->find($request->check_list_id);
+        if(!$checklist) {
+            return response()->json([
+                'success' => false,
+                'message' => "Checklist with id $request->check_list_id not found in your list"
+            ], 400);
+        }
+        $item = $checklist->items()->find($id);
+        if (!$item) {
+            return response()->json([
+                'success' => false,
+                'message' => "Item with id $id not found"
+            ], 400);
+        }
+        $item->delete();
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

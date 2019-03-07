@@ -30,5 +30,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+
+        Passport::tokensCan([
+            'store-list' => 'Создавать новый чек-лист',
+        ]);
     }
 }
